@@ -1,0 +1,20 @@
+test:
+  image: golang:1.16
+  rules:
+    - changes:
+      - "*.go"
+  script: 
+   - go test .
+
+static-analysis:
+ image:
+  name: sonarsource/sonar-scanner-cli
+  entrypoint: [""]
+ variables:
+ script:
+  - sonar-scanner -Dsonar.projectKey=MyProject -Dsonar.sources=. -Dsonar.host.url=http://192.168.0.190:9000 -Dsonar.login=sqp_fdbc3a7878b69b511c067d91c0993ea95de91b31
+
+build:
+  image: docker:latest
+  script:
+   - docker build .
